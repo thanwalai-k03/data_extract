@@ -10,8 +10,10 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Put CSV files in `data/raw/`. Run the ingestion pipeline to create
-`data/northwind.duckdb` and load each CSV as a table in the `raw` schema:
+Put current CSV files in `data/raw/` and legacy CSV files in `data/legacy/`.
+Run the ingestion pipeline to create `data/northwind.duckdb` and load all
+files into the `raw` schema. Legacy tables are named with the `legacy_` prefix
+(for example, `raw.legacy_orders`):
 
 ```bash
 python scripts/data_extract.py
@@ -30,5 +32,6 @@ Run a query (results are printed as CSV):
 python scripts/query.py "SELECT * FROM raw.orders LIMIT 5"
 ```
 
-Use `--source-dir` and `--database` to override the default paths. CSV values
-are loaded as strings so the raw tables preserve the source data.
+Use `--source-dir`, `--legacy-dir`, and `--database` to override the default
+paths. CSV values are loaded as strings so the raw tables preserve the source
+data.
